@@ -15,7 +15,7 @@
 
 <ng-container *ngIf="(books$ |async).length > 0; else empty">
   <div class="book-grid">
-    <div class="book" data-testing="book-item" *ngFor="let b of books | async; id: getBookId">
+    <div class="book" data-testing="book-item" *ngFor="let b of books$ | async; id: getBookId">
       <div aria-label="title" class="book--title">
         {{ b.title }}
       </div>

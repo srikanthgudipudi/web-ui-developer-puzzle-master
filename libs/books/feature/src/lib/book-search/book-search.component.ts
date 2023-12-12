@@ -5,10 +5,12 @@ import {
   clearSearch,
   getAllBooks,
   ReadingListBook,
+  removeFromReadingList,
   searchBooks
 } from '@tmo/books/data-access';
 import { FormBuilder } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'tmo-book-search',
@@ -25,18 +27,13 @@ export class BookSearchComponent {
 
   constructor(
     private readonly store: Store,
-    private readonly fb: FormBuilder
+    private readonly fb: FormBuilder,
+    private _snackBar: MatSnackBar
   ) {}
 
   public get searchTerm(): string {
     return this.searchForm.value.term;
   }
-
-  // ngOnInit(): void {
-  //   this.store.select(getAllBooks).subscribe(books => {
-  //     this.books = books;
-  //   });
-  // }
 
   getBookId(index, item){
     return item.id;
@@ -50,8 +47,18 @@ export class BookSearchComponent {
 
   addBookToReadingList(book: Book) {
     this.store.dispatch(addToReadingList({ book }));
+    let snackBarRef = this._snackBar.open( book.title + ' Added to read', 'UNDO', {
+      duration: 3000
+    });
+    snackBarRef.onAction().subscribe(() => {
+      this.store.dispatch(removeFromReadingList({ item: { bookId: book.id, ...book } }));
+    });
+   
   }
 
+  undoBookFromReadlingList(){
+
+  }
   searchExample() {
     this.searchForm.controls.term.setValue('javascript');
     this.searchBooks();
