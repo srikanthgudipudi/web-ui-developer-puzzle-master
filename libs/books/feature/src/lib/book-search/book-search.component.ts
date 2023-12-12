@@ -15,10 +15,11 @@ import { Book } from '@tmo/shared/models';
   templateUrl: './book-search.component.html',
   styleUrls: ['./book-search.component.scss']
 })
-export class BookSearchComponent implements OnInit {
-  books: ReadingListBook[];
+export class BookSearchComponent {
+  // books: ReadingListBook[];
+  books$ = this.store.select(getAllBooks);
 
-  searchForm = this.fb.group({
+  public searchForm = this.fb.group({
     term: ''
   });
 
@@ -27,14 +28,18 @@ export class BookSearchComponent implements OnInit {
     private readonly fb: FormBuilder
   ) {}
 
-  get searchTerm(): string {
+  public get searchTerm(): string {
     return this.searchForm.value.term;
   }
 
-  ngOnInit(): void {
-    this.store.select(getAllBooks).subscribe(books => {
-      this.books = books;
-    });
+  // ngOnInit(): void {
+  //   this.store.select(getAllBooks).subscribe(books => {
+  //     this.books = books;
+  //   });
+  // }
+
+  getBookId(index, item){
+    return item.id;
   }
 
   formatDate(date: void | string) {
