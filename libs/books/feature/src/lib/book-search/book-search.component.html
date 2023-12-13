@@ -15,7 +15,7 @@
 
 <ng-container *ngIf="(books$ |async).length > 0; else empty">
   <div class="book-grid">
-    <div class="book" data-testing="book-item" *ngFor="let b of books | async; id: getBookId">
+    <div class="book" data-testing="book-item" *ngFor="let b of books$ | async; id: getBookId; let i = index;">
       <div aria-label="title" class="book--title">
         {{ b.title }}
       </div>
@@ -37,7 +37,7 @@
               color="primary"
               (click)="addBookToReadingList(b)"
               [disabled]="b.isAdded">
-              Want to Read
+              {{ !b.finished ? 'Want to Read' : 'Finished'}}
             </button>
           </div>
         </div>

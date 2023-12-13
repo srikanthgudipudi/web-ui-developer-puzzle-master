@@ -11,7 +11,7 @@
 .reading-list-item {
   display: flex;
   justify-content: center;
-  margin-bottom: $spacing-xs;
+  // margin-bottom: $spacing-xs;
   width: 100%;
 
   > * {
@@ -44,4 +44,8 @@
   font-weight: 100;
   font-size: 1rem;
   color: $gray60;
+}
+.reading-list-finished-section {
+  margin-top: $spacing-xs;
+  margin-bottom: $spacing-xs;
 }
